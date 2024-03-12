@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+  font-family: "Gilroy";
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#parent {
+  height: 50vh;
+  width: 30vmin;
+  background-color: cyan;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#child {
+  width: 50%;
+  height: 50%;
+  background-color: salmon;
+  font-size: 1rem;
+}
+
+#h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1em;
+}
+
+@media (max-width: 768px) {
+  #parent {
+    background-color: black;
+  }
+}
