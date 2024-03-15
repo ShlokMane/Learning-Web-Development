@@ -9,7 +9,7 @@ form.addEventListener("submit", function (e) {
       h4.style.color = "red";
       break;
     } else {
-      h4.textContent = "";
+      h4.textContent = h4.textContent + " " + input1[i].value.trim();
     }
   }
 });
