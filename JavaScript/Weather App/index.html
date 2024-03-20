@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="search">
+        <input type="text" placeholder="Enter City Name" spellcheck="false" />
+        <button><img src="images/search.png" /></button>
+      </div>
+      <div class="error">
+        <p>Invalid City Name</p>
+      </div>
+      <div class="weather">
+        <img src="images/rain.png" class="weather-img" />
+        <h1 class="temp">22°C</h1>
+        <h2 class="city">Bengaluru</h2>
+        <div class="detail">
+          <div class="col">
+            <img src="images/humidity.png" />
+            <div>
+              <p class="humidity">50%</p>
+              <p>Humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="images/wind.png" />
+            <div>
+              <p class="wind">15 km/h</p>
+              <p>Wind Speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const input = document.querySelector("input");
+      const button = document.querySelector("button");
+      const error = document.querySelector(".error");
+
+      const weatherImage = document.querySelector(".weather-img");
+      const apiKey = "861a143a5aaad96611ac21b2d5c351ff";
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?units=metric";
+
+      async function checkWeather(city = "Bengaluru") {
+        const response = await fetch(
+          apiUrl + "&q=" + city + `&appid=${apiKey}`
+        );
+        var data = await response.json();
+        if (data.cod == 200) {
+          error.style.display = "none";
+          document.querySelector(".city").innerHTML = data.name;
+          document.querySelector(".temp").innerHTML =
+            Math.round(data.main.temp) + "°C";
+          document.querySelector(".humidity").innerHTML =
+            data.main.humidity + "%";
+          document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+          if (data.weather[0].main == "Clouds") {
+            weatherImage.src = "images/clouds.png";
+          } else if (data.weather[0].main == "Clear") {
+            weatherImage.src = "images/clear.png";
+          } else if (data.weather[0].main == "Rain") {
+            weatherImage.src = "images/rain.png";
+          } else if (data.weather[0].main == "Drizzle") {
+            weatherImage.src = "images/drizzle.png";
+          } else if (data.weather[0].main == "Mist") {
+            weatherImage.src = "images/mist.png";
+          }
+          document.querySelector(".weather").style.display = "block";
+        } else {
+          error.style.display = "block";
+          error.innerHTML = "Enter a Valid City Name";
+        }
+      }
+      button.addEventListener("click", () => {
+        if (input.value === "") {
+          error.style.display = "block";
+          error.innerHTML = "Please Enter City Name";
+        } else {
+          checkWeather(input.value);
+        }
+      });
+    </script>
+  </body>
+</html>
